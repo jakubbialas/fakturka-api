@@ -1,5 +1,5 @@
 {
-  "name": "fakturka",
+  "name": "fakturka-api",
   "version": "1.0.0",
   "description": "fakturka api",
   "main": "dist",
@@ -39,12 +39,10 @@
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.10.7",
     "morgan": "^1.8.0",
+    "numeral": "^2.0.6",
     "passport": "^0.3.2",
-    "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
-    "passport-google-id-token": "^0.4.1",
-    "passport-google-oauth20": "^1.0.0",
-    "passport-google-token": "^0.1.2",
+    "passport-google-token": "git+ssh://git@github.com/jakubbialas/passport-google-token.git",
     "passport-jwt": "^2.2.1",
     "passport-local": "^1.0.0",
     "resource-router-middleware": "^0.6.0"

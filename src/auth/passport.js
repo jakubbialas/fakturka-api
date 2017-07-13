@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var Jwt = require("passport-jwt");
 var JwtStrategy = Jwt.Strategy;
 var ExtractJwt = Jwt.ExtractJwt;
-var User = require('../models/User');
+import {User} from '../models';
 
 module.exports = function (passport) {
 
@@ -54,22 +54,22 @@ module.exports = function (passport) {
             return done(err);
         });
     }));
-    
+
     passport.use(new GoogleTokenStrategy({
         clientID: configAuth.googleAuth.clientID,
         clientSecret: configAuth.googleAuth.clientSecret,
-    }, function(accessToken, refreshToken, profile, done) {
-        console.log(profile);
+    }, function (accessToken, refreshToken, profile, done) {
+        console.log(arguments);
         User.findOne({
-            'google.id': profile.id 
-        }, function(err, user) {
+            'google.id': profile.id
+        }, function (err, user) {
             if (err || user) {
                 return done(err, user);
             }
-                
+
             User.findOne({
-                'email': profile.emails[0].value 
-            }, function(err, user) {
+                'email': profile.emails[0].value
+            }, function (err, user) {
                 if (err || user) {
                     return done(err, user);
                 }
@@ -82,28 +82,28 @@ module.exports = function (passport) {
                         middleName: profile.name.middleName
                     }
                 });
-                user.save(function(err) {
+                user.save(function (err) {
                     if (err) console.log(err);
                     return done(err, user);
                 });
             });
         });
     }));
-    
+
     passport.use(new FacebookTokenStrategy({
         clientID: configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
-    }, function(accessToken, refreshToken, profile, done) {
+    }, function (accessToken, refreshToken, profile, done) {
         User.findOne({
-            'facebook.id': profile.id 
-        }, function(err, user) {
+            'facebook.id': profile.id
+        }, function (err, user) {
             if (err || user) {
                 return done(err, user);
             }
-                
+
             User.findOne({
-                'email': profile.emails[0].value 
-            }, function(err, user) {
+                'email': profile.emails[0].value
+            }, function (err, user) {
                 if (err || user) {
                     return done(err, user);
                 }
@@ -116,7 +116,7 @@ module.exports = function (passport) {
                         middleName: profile.name.middleName
                     }
                 });
-                user.save(function(err) {
+                user.save(function (err) {
                     if (err) console.log(err);
                     return done(err, user);
                 });

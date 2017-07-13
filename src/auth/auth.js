@@ -5,11 +5,11 @@ var jwt = require('jwt-simple');
 
 var configAuth = require('../../config/auth');
 
-router.post("/error", function(req, res) {
+router.post("/error", function (req, res) {
     res.status(401).send();
 });
 
-var authSuccess = function(req, res) {
+var authSuccess = function (req, res) {
     var payload = {
         id: req.user.id
     };

@@ -15,18 +15,23 @@ var app = express();
 app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/test');
 
+app.use(function (req, res, next) {
+    req.serverUrl = req.protocol + "://" + req.get('host');
+    next();
+});
+
 app.use('/auth', auth);
-app.use(passport.authenticate("jwt", { session: false }));
+app.use(passport.authenticate("jwt", {session: false}));
 
 app.use('/api', api);
 
 var server = http.createServer(app);
 var port = 8080;
-server.listen(port, function() {
-  console.log('Express server listening on port ' + server.address().port);
+server.listen(port, function () {
+    console.log('Express server listening on port ' + server.address().port);
 });
