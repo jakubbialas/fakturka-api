@@ -41,15 +41,25 @@ module.exports = function (passport) {
     }));
 
     passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passwordField: 'password',
         session: false
-    }, function (email, password, done) {
-        User.findOne({where: {email: email}}).then(function (user) {
-            if (!user || user.password !== password) {
+    }, function (username, password, done) {
+        User.findOne({email: username}).then(function (user) {
+            if (!user) {
                 return done('Invalid email or password');
             }
-            return done(null, user);
+
+            user.comparePassword(password, function(err, isMatch) {
+                if (err) {
+                    return done(err);
+                }
+                if (isMatch) {
+                    return done(null, user);
+                } else {
+                    return done('Invalid email or password');
+                }
+            });
         }, function (err) {
             return done(err);
         });
@@ -59,7 +69,6 @@ module.exports = function (passport) {
         clientID: configAuth.googleAuth.clientID,
         clientSecret: configAuth.googleAuth.clientSecret,
     }, function (accessToken, refreshToken, profile, done) {
-        console.log(arguments);
         User.findOne({
             'google.id': profile.id
         }, function (err, user) {

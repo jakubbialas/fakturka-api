@@ -1,0 +1,10 @@
+{
+  "host": "smtp.3a.pl",
+  "port": 465,
+  "secure": true,
+  "auth": {
+    "user": "testow-maile-programistow@3a.pl",
+    "pass": "njnjnj"
+  },
+  "sender": "jb@mnb.3a.pl"
+}

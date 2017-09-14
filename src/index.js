@@ -1,5 +1,6 @@
 var http = require('http');
 var express = require('express');
+var validator = require('express-validator');
 var cors = require('cors');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -16,6 +17,7 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(validator());
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/test');

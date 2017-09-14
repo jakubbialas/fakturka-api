@@ -1,6 +1,10 @@
+/**
+ * Password hash middleware.
+ */
 import bcrypt from 'bcrypt-nodejs';
 import crypto from 'crypto';
 import mongoose from 'mongoose';
+import {UserSettingDef} from "./user-setting";
 
 const UserDef = {
     email: { type: String, unique: true },
@@ -13,14 +17,12 @@ const UserDef = {
         firstName: String,
         lastName: String,
         middleName: String
-    }
+    },
+    settings: [UserSettingDef],
 };
 
 const userSchema = new mongoose.Schema(UserDef, { timestamps: true });
 
-/**
- * Password hash middleware.
- */
 userSchema.pre('save', function save(next) {
   var user = this;
   if (!user.isModified('password')) { return next(); }

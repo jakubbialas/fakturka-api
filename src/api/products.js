@@ -24,18 +24,15 @@ router.get('/:productId', function (req, res) {
     });
 });
 
-
 router.post('/', function (req, res) {
     var product = new Product(req.body);
 
     product.save(function (err, product) {
         if (err) {
             res.status(500).send();
-            console.error(err);
         } else {
             res.status(201).location(req.serverUrl + '/api/products/' + product._id).send();
         }
-
     });
 });
 
